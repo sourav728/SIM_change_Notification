@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -36,10 +37,10 @@ public class AirphoneMode extends BroadcastReceiver {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case SIM_CARD_CHANGED:
-                        Toast.makeText(Notification_context, "SIM Card Has Changed", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(Notification_context, "SIM Card Has Changed", Toast.LENGTH_LONG).show();
                         break;
                     case SIM_CARD_NOT_CHANGED:
-                        Toast.makeText(Notification_context, "SIM Card Not Changed", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Notification_context, "SIM Card Not Changed", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -48,6 +49,7 @@ public class AirphoneMode extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        final WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         functionCall = new FunctionCall();
         Notification_context = context;
         functionCall.logStatus("Airphone Mode Receiver Current Time:" + functionCall.currentTime());
@@ -74,6 +76,13 @@ public class AirphoneMode extends BroadcastReceiver {
             else  handler.sendEmptyMessage(SIM_CARD_NOT_CHANGED);
         }
         else Toast.makeText(context, "AIRPLANE MODE On", Toast.LENGTH_SHORT).show();
+
+        if (wifiManager.isWifiEnabled())
+        {
+            wifiManager.setWifiEnabled(false);
+            Toast.makeText(Notification_context, "Wifi Disabled", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

@@ -36,7 +36,7 @@ public class MyService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        stop_receiver();
+        //stop_receiver();
     }
 
     @SuppressLint("ShortAlarm")

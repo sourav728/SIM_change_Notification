@@ -99,4 +99,5 @@ public class MainActivity extends AppCompatActivity {
             }
         } else functionCalls.logStatus("AirphoneMode Already running..");
     }*/
+
 }
